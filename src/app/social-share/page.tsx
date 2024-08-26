@@ -38,11 +38,15 @@ const SocialShare = () => {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("/api/image-upload", {
-        body: formData,
+      const response = await axios.post("/api/image-upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
       });
-      if (!response.data.ok) {
-        throw new Error("Failed to upload image");
+      console.log(response)
+      if (!response.data.publicId) {
+        alert("Falied to upload")
+        return
       }
 
       const data = response.data;
